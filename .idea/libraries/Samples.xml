@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="Samples">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/labyrinthe-game/src/main/resources/Dungeon-Pack/Samples/Unity Sample.zip!/" />
+      <root url="jar://$PROJECT_DIR$/labyrinthe-game/src/main/resources/Dungeon-Pack/Samples/Tiled Sample.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
