@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation(":mazing:1.0.1")
+    implementation(":mazing")
 
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
