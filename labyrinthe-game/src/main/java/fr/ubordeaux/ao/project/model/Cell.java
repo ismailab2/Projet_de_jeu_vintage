@@ -10,4 +10,12 @@ public class Cell {
         this.cellType = cellType;
         this.position = position;
     }
+
+    public CellType getCellType() {
+        return cellType;
+    }
+
+    public Point getPosition() {
+        return position;
+    }
 }

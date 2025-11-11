@@ -1,5 +1,7 @@
 package fr.ubordeaux.ao.project.model;
 
+import fr.ubordeaux.ao.project.model.util.Point;
+
 public class Grid {
     private Cell[][] labyrinth;
 
@@ -18,5 +20,16 @@ public class Grid {
 
     public int getySize() {
         return ySize;
+    }
+
+    //recupere la cell de la position donnée en parametre (doit etre valide)
+    public Cell getCell(Point position){
+        if(position.getX() >= 0 && position.getX() < this.xSize
+        && position.getY() >= 0 && position.getY() < this.ySize){
+            return this.labyrinth[position.getX()][position.getY()];
+        }
+        else {
+            throw new IllegalArgumentException("La cell n'existe pas pour la position donnée");
+        }
     }
 }
