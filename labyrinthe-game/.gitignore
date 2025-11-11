@@ -1,0 +1,28 @@
+# Compilés
+/build/
+!/gradle/wrapper/gradle-wrapper.jar
+
+# Gradle
+.gradle/
+**/out/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.swp
+
+# Tests
+/test-output/
+

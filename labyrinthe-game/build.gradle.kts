@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    implementation(":mazing")
+    implementation(files("lib/mazing.jar"))
 
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
@@ -23,7 +23,7 @@ dependencies {
 // Apply a specific Java toolchain to ease working on different environments.
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(23)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
