@@ -1,5 +1,8 @@
 package fr.ubordeaux.ao.project.model.util;
 
+import static java.lang.Math.abs;
+
+//classe utilitaire d'un point de base, avec des fonctions de distances
 public class Point {
     private int x;
     private int y;
@@ -19,14 +22,5 @@ public class Point {
 
     static public int distance(Point p1, Point p2){
         return abs(p1.getX()-p2.getX()) + abs(p1.getY()-p2.getY());
-    }
-
-    private static int abs(int x) {
-        if(x>0){
-            return x;
-        }
-        else {
-            return -x;
-        }
     }
 }

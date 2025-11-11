@@ -3,11 +3,13 @@ package fr.ubordeaux.ao.project.model;
 import fr.ubordeaux.ao.project.model.entity.Player;
 import fr.ubordeaux.ao.project.model.util.Point;
 
+//un objet de cette classe represente la logique de la partie en cours, avec son joueur et son labytinth pour le moment
 public class Game {
     Grid labyrinth;
     Player player;
 
     //constructeur utilsé pour lancer la game par default
+    //possibilité de changer sa taille en modifiant defaultXsize et defaultYsize
     public Game(){
         int defaultXsize = 8;
         int defaultYsize = 8;
@@ -44,7 +46,7 @@ public class Game {
         this.player = player;
     }
 
-    //quick written print for model debug
+    //quick writen print for model debug
     public void printGame(){
         for(int i=0; i<this.labyrinth.getxSize(); i++){
             for(int j=0; j<this.labyrinth.getySize(); j++){
