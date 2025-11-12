@@ -1,5 +1,7 @@
 package fr.ubordeaux.ao.project.model.util;
 
+import fr.ubordeaux.ao.project.model.enums.Direction;
+
 import static java.lang.Math.abs;
 
 //classe utilitaire d'un point de base, avec des fonctions de distances
@@ -18,6 +20,23 @@ public class Point {
 
     public int getY(){
         return y;
+    }
+
+    static public Point directionToPoint(Direction direction){
+        Point res;
+        switch (direction){
+            case NORTH -> res = new Point(0,-1);
+            case SOUTH -> res = new Point(0,1);
+            case WEST -> res = new Point(-1,0);
+            case EST -> res = new Point(1,0);
+            default -> throw new IllegalArgumentException("Mauvais enum direction donnée");
+        }
+        return res;
+    }
+
+    //calcul la somme entre deux points
+    static public Point sum(Point p1, Point p2){
+        return new Point(p1.getX() + p2.getX() , p1.getY() + p2.getY());
     }
 
     static public int distance(Point p1, Point p2){

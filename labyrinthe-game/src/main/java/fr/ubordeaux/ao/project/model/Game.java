@@ -1,12 +1,21 @@
 package fr.ubordeaux.ao.project.model;
 
 import fr.ubordeaux.ao.project.model.entity.Player;
+import fr.ubordeaux.ao.project.model.enums.CellType;
+import fr.ubordeaux.ao.project.model.enums.Direction;
+import fr.ubordeaux.ao.project.model.logic.Collision;
+import fr.ubordeaux.ao.project.model.logic.Movement;
+import fr.ubordeaux.ao.project.model.logic.Rules;
 import fr.ubordeaux.ao.project.model.util.Point;
 
 //un objet de cette classe represente la logique de la partie en cours, avec son joueur et son labytinth pour le moment
 public class Game {
-    Grid labyrinth;
-    Player player;
+    private Grid labyrinth;
+    private Player player;
+
+    private Collision collisionManager;
+    private Movement movementManager;
+    private Rules rulesManager;
 
     //constructeur utilsé pour lancer la game par default
     //possibilité de changer sa taille en modifiant defaultXsize et defaultYsize
@@ -38,18 +47,26 @@ public class Game {
 
         this.labyrinth = new Grid(cell, defaultXsize, defaultYsize);
         this.player = new Player(new Point(1,1));
+
+        this.collisionManager = new Collision(this);
+        this.movementManager = new Movement(this);
+        this.rulesManager = new Rules(this);
     }
 
     //constructeure pour une game personalisé
     public Game(Grid labyrinth, Player player){
         this.labyrinth = labyrinth;
         this.player = player;
+
+        this.collisionManager = new Collision(this);
+        this.movementManager = new Movement(this);
+        this.rulesManager = new Rules(this);
     }
 
     //quick writen print for model debug
     public void printGame(){
-        for(int i=0; i<this.labyrinth.getxSize(); i++){
-            for(int j=0; j<this.labyrinth.getySize(); j++){
+        for(int j=0; j<this.labyrinth.getySize(); j++){
+            for(int i=0; i<this.labyrinth.getxSize(); i++){
                 if(player.getPlayerPosition().getX() == i && player.getPlayerPosition().getY() == j){
                     System.out.print('P');
                 } else{
@@ -61,11 +78,23 @@ public class Game {
                         case BOX -> System.out.print('X');
                     }
                 }
-
-                if(j == this.labyrinth.getySize()-1){
-                    System.out.println();
-                }
             }
+            System.out.println();
         }
+    }
+
+    //bouge le player dans la grid vers une direction donnée, ou non si elle est impossible (vers un mur par exemple)
+    public void movePlayer(Direction direction){
+        if(collisionManager.playerCollision(direction)){
+            movementManager.playerMovement(direction);
+        }
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Grid getGrid(){
+        return this.labyrinth;
     }
 }

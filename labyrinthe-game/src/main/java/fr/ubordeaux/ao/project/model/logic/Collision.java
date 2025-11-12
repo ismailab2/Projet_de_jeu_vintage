@@ -1,0 +1,25 @@
+package fr.ubordeaux.ao.project.model.logic;
+
+import fr.ubordeaux.ao.project.model.Game;
+import fr.ubordeaux.ao.project.model.enums.CellType;
+import fr.ubordeaux.ao.project.model.enums.Direction;
+import fr.ubordeaux.ao.project.model.util.Point;
+
+//réit les régle lié au collision (le joueur peut il avancer, peut il poser une bombe ici)
+public class Collision {
+    Game game;
+
+    public Collision(Game game) {
+        this.game = game;
+    }
+
+    //test la collision entre la position du joueur et une direction
+    public boolean playerCollision(Direction direction){
+        Point newPosition = Point.sum(Point.directionToPoint(direction), game.getPlayer().getPlayerPosition());
+
+        //System.out.print(newPosition.getX());
+        //System.out.println(newPosition.getY());
+
+        return game.getGrid().getCell(newPosition).getCellType() == CellType.GROUND;
+    }
+}

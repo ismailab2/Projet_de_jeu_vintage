@@ -24,13 +24,19 @@ public class Grid {
     }
 
     //recupere la cell de la position donnée en parametre (la position doit etre valide)
-    public Cell getCell(Point position){
-        if(position.getX() >= 0 && position.getX() < this.xSize
-        && position.getY() >= 0 && position.getY() < this.ySize){
-            return this.labyrinth[position.getX()][position.getY()];
+    public Cell getCell(Point point){
+        if(validPosition(point)){
+            return this.labyrinth[point.getX()][point.getY()];
         }
         else {
             throw new IllegalArgumentException("La cell n'existe pas pour la position donnée");
         }
+    }
+
+    //renvoi vrai si le point donnée est contenu dans la grid, sinon faux
+    //cette methode sera peut etre bougé ailleur
+    public boolean validPosition(Point point){
+        return (point.getX()>=0 && point.getY()>=0
+                && point.getX()<this.getxSize() && point.getY()<this.getySize());
     }
 }
