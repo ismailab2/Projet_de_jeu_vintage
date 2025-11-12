@@ -42,3 +42,8 @@ idea {
         isDownloadSources = true
     }
 }
+
+//a supprimer pour le rendu, sert juste pour le debug de modele dans le main
+tasks.named<JavaExec>("run") {
+    standardInput = System.`in`
+}

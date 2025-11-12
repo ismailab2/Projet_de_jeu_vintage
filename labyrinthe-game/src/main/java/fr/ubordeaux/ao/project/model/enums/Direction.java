@@ -4,6 +4,6 @@ package fr.ubordeaux.ao.project.model.enums;
 public enum Direction {
     NORTH,
     SOUTH,
-    EST,
+    EAST,
     WEST;
 }

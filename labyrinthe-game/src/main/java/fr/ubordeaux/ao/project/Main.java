@@ -1,25 +1,30 @@
 package fr.ubordeaux.ao.project;
 
-import fr.ubordeaux.ao.mazing.api.WindowGame;
-import fr.ubordeaux.ao.mazing.api.IWindowGame;
 import fr.ubordeaux.ao.project.model.Game;
 import fr.ubordeaux.ao.project.model.enums.Direction;
 
+import java.io.IOException;
+
 
 public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    public static void main(String[] args) throws IOException {
 
         //use for model debug
+        //boucle infini pour un affichage du modele dans le terminal avec controle clavier simple
+        //on le supprimera pour le rendu final, avec le "throws IOException" et le "import java.io.IOException;"
         Game game = new Game(); //create default game
-        game.printGame(); //print the current game
+        while (true) {
+            if (System.in.available() > 0) {
+                char input = (char) System.in.read();
 
-        //test un movement dans une direction invalide (un mur)
-        game.movePlayer(Direction.WEST);
-        game.printGame();
-
-        //test un movement dans une direction valide (un ground)
-        game.movePlayer(Direction.SOUTH);
-        game.printGame();
+                switch (input) {
+                    case 'z' -> game.movePlayer(Direction.NORTH);
+                    case 's' -> game.movePlayer(Direction.SOUTH);
+                    case 'q' -> game.movePlayer(Direction.WEST);
+                    case 'd' -> game.movePlayer(Direction.EAST);
+                }
+                game.printGame();
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ public class Point {
             case NORTH -> res = new Point(0,-1);
             case SOUTH -> res = new Point(0,1);
             case WEST -> res = new Point(-1,0);
-            case EST -> res = new Point(1,0);
+            case EAST -> res = new Point(1,0);
             default -> throw new IllegalArgumentException("Mauvais enum direction donnée");
         }
         return res;
