@@ -42,4 +42,10 @@ public class Point {
     static public int distance(Point p1, Point p2){
         return abs(p1.getX()-p2.getX()) + abs(p1.getY()-p2.getY());
     }
+
+    @Override
+    public String toString() {
+        return "(" + x + "," + y + ")";
+    }
+
 }

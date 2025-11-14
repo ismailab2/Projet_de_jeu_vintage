@@ -12,7 +12,7 @@ public class BagOfCommand {
 
     public void addCommand(Command command) {
         queue.add(command);
-        System.out.println("Commande ajoutée est: " + command.getClass().getSimpleName());
+        System.out.println(" la Commande ajoutee est: " + command.getClass().getSimpleName());
     }
 
     public void executeAll() {
