@@ -2,6 +2,7 @@ package fr.ubordeaux.ao.project;
 
 import fr.ubordeaux.ao.project.controller.pattern.commands.BagOfCommand;
 import fr.ubordeaux.ao.project.controller.pattern.commands.MovementCommand;
+import fr.ubordeaux.ao.project.controller.pattern.commands.PlaceBombCommand;
 import fr.ubordeaux.ao.project.model.Game;
 import fr.ubordeaux.ao.project.model.enums.Direction;
 
@@ -56,10 +57,16 @@ public class Main {
         bag.executeAll();
         game.printGame();
 
+        bag.addCommand(new PlaceBombCommand(game, 2));
+        bag.executeAll();
+        game.printGame();
+
+
         // Avant exécution
         System.out.println(game.getPlayer().getPlayerPosition()); // (1,1)
 
         //bag.executeAll();
+        //game.printGame();
 
         //Après exécution
         System.out.println(game.getPlayer().getPlayerPosition());

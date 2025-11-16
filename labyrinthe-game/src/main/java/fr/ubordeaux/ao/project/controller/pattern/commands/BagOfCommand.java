@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BagOfCommand {
-    private Queue<Command> queue;
+    private final Queue<Command> queue;
 
     public BagOfCommand() {
         queue = new LinkedList<>();

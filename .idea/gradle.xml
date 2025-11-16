@@ -5,6 +5,8 @@
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/labyrinthe-game" />
+        <option name="gradleHome" value="C:\gradle-9.0.0-bin\gradle-9.0.0" />
+        <option name="gradleJvm" value="23" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/labyrinthe-game" />

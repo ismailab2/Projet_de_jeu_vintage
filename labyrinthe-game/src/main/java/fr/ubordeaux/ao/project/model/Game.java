@@ -1,12 +1,17 @@
 package fr.ubordeaux.ao.project.model;
 
+import fr.ubordeaux.ao.project.model.entity.Bomb;
 import fr.ubordeaux.ao.project.model.entity.Player;
 import fr.ubordeaux.ao.project.model.enums.CellType;
 import fr.ubordeaux.ao.project.model.enums.Direction;
 import fr.ubordeaux.ao.project.model.logic.Collision;
 import fr.ubordeaux.ao.project.model.logic.Movement;
+import fr.ubordeaux.ao.project.model.logic.PlaceBombRandom;
 import fr.ubordeaux.ao.project.model.logic.Rules;
 import fr.ubordeaux.ao.project.model.util.Point;
+
+import java.util.ArrayList;
+import java.util.List;
 
 //un objet de cette classe represente la logique de la partie en cours, avec son joueur et son labytinth pour le moment
 public class Game {
@@ -16,6 +21,10 @@ public class Game {
     private Collision collisionManager;
     private Movement movementManager;
     private Rules rulesManager;
+
+    private List<Bomb> bombs;
+    private PlaceBombRandom bombPlacer;
+
 
     //constructeur utilsé pour lancer la game par default
     //possibilité de changer sa taille en modifiant defaultXsize et defaultYsize
@@ -34,6 +43,7 @@ public class Game {
                     cell[i][j] = new Cell(CellType.WALL,new Point(i,j));
                 }
 
+                /*
                 //mettre quelques caisse a des position arbitraire
                 else if ((i==3 && j==3) || (i==4 && j==2)) {
                     cell[i][j] = new Cell(CellType.BOX,new Point(i,j));
@@ -41,6 +51,15 @@ public class Game {
 
                 else {
                     cell[i][j] = new Cell(CellType.GROUND,new Point(i,j));
+                }
+
+                 */
+
+            }
+            // Caisses fixes non destructibles par les bombes
+            for (int k = 2; k < defaultXsize; k += 2) {
+                for (int m = 2; m < defaultYsize; m += 2) {
+                    cell[k][m] = new Cell(CellType.BOX_FIXE, new Point(k, m));
                 }
             }
         }
@@ -51,6 +70,10 @@ public class Game {
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
         this.rulesManager = new Rules(this);
+
+        this.bombs = new ArrayList<>();
+        this.bombPlacer = new PlaceBombRandom(this, bombs);
+
     }
 
     //constructeure pour une game personalisé
@@ -61,6 +84,10 @@ public class Game {
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
         this.rulesManager = new Rules(this);
+
+        this.bombs = new ArrayList<>();
+        this.bombPlacer = new PlaceBombRandom(this, bombs);
+
     }
 
     //quick writen print for model debug
@@ -76,6 +103,9 @@ public class Game {
                         case GROUND -> System.out.print(' ');
                         case WALL -> System.out.print('.');
                         case BOX -> System.out.print('X');
+                        case BOX_FIXE -> System.out.print('O');
+                        case BOMB -> System.out.print('B');
+                        case VIDE ->  System.out.print(' ');
                     }
                 }
             }
@@ -89,6 +119,11 @@ public class Game {
             movementManager.playerMovement(direction);
         }
     }
+
+    public void placeBomb(int power) {
+        bombPlacer.placeBombRandom(power);
+    }
+
 
     public Player getPlayer() {
         return player;
