@@ -25,7 +25,6 @@ public class Game {
     private List<Bomb> bombs;
     private PlaceBombRandom bombPlacer;
 
-
     //constructeur utilsé pour lancer la game par default
     //possibilité de changer sa taille en modifiant defaultXsize et defaultYsize
     public Game(){
@@ -69,7 +68,7 @@ public class Game {
 
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
-        this.rulesManager = new Rules(this);
+        this.rulesManager = new Rules(this,false);
 
         this.bombs = new ArrayList<>();
         this.bombPlacer = new PlaceBombRandom(this, bombs);
@@ -83,7 +82,7 @@ public class Game {
 
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
-        this.rulesManager = new Rules(this);
+        this.rulesManager = new Rules(this, false);
 
         this.bombs = new ArrayList<>();
         this.bombPlacer = new PlaceBombRandom(this, bombs);
@@ -105,7 +104,6 @@ public class Game {
                         case BOX -> System.out.print('X');
                         case BOX_FIXE -> System.out.print('O');
                         case BOMB -> System.out.print('B');
-                        case VIDE ->  System.out.print(' ');
                     }
                 }
             }
@@ -115,6 +113,9 @@ public class Game {
 
     //bouge le player dans la grid vers une direction donnée, ou non si elle est impossible (vers un mur par exemple)
     public void movePlayer(Direction direction){
+        if(collisionManager.playerExplosionCollision(direction)){
+            //le joueur meurt
+        }
         if(collisionManager.playerCollision(direction)){
             movementManager.playerMovement(direction);
         }

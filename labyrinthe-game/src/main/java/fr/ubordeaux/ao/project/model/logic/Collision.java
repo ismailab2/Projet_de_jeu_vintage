@@ -22,4 +22,13 @@ public class Collision {
 
         return game.getGrid().getCell(newPosition).getCellType() == CellType.GROUND;
     }
-}
+
+    //test la collision entre la position du joueur et une direction
+    public boolean playerExplosionCollision(Direction direction){
+        Point newPosition = Point.sum(Point.directionToPoint(direction), game.getPlayer().getPlayerPosition());
+
+        //System.out.print(newPosition.getX());
+        //System.out.println(newPosition.getY());
+
+        return game.getGrid().getCell(newPosition).getCellType() == CellType.EXPLOSION;
+    }}

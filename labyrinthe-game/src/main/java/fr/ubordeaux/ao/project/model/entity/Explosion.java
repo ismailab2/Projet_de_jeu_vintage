@@ -34,6 +34,10 @@ public class Explosion {
                 Point next = new Point(position.getX() + dir.getX() * i,
                         position.getY() + dir.getY() * i);
 
+                if (game.getPlayer().getPlayerPosition().equals(next)) {
+                    //tuer le joueur
+                }
+
                 if (!game.getGrid().validPosition(next)) break;
 
                 Cell cell = game.getGrid().getCell(next);
@@ -41,12 +45,10 @@ public class Explosion {
 
                 if (type == CellType.WALL || type == CellType.BOX_FIXE) break;
 
-                if (type == CellType.BOX) {
-                    cell.setCellType(CellType.GROUND);
+                if (type == CellType.BOX || type == CellType.GROUND) {
+                    cell.setCellType(CellType.EXPLOSION);
                     break;
                 }
-
-                cell.setCellType(CellType.EXPLOSION);
             }
         }
     }
@@ -62,15 +64,19 @@ public class Explosion {
         game.getGrid().getCell(position).setCellType(CellType.GROUND);
 
         for (Direction dirEnum : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
-            Point next = Point.sum(position, Point.directionToPoint(dirEnum));
-            if (game.getGrid().validPosition(next)) {
+            Point dir = Point.directionToPoint(dirEnum);
+
+            for (int i = 1; i <= power; i++) {
+                Point next = new Point(position.getX() + dir.getX() * i,
+                        position.getY() + dir.getY() * i);
+
+                if (!game.getGrid().validPosition(next)) break;
+
                 Cell cell = game.getGrid().getCell(next);
-                if (cell.getCellType() == CellType.EXPLOSION) {
-                    if (cell.getOriginalType() == CellType.GROUND) {
-                        cell.setCellType(CellType.VIDE);
-                    } else {
-                        cell.setCellType(cell.getOriginalType());
-                    }
+                CellType type = cell.getCellType();
+
+                if (type == CellType.EXPLOSION){
+                    cell.setCellType(CellType.GROUND);
                 }
             }
         }
