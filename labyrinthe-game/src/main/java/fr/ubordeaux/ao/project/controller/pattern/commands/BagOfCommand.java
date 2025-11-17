@@ -27,8 +27,4 @@ public class BagOfCommand {
         queue.clear();
         System.out.println("Youpi Sac de commandes est vidé.");
     }
-
-    public boolean isEmpty() {
-        return queue.isEmpty();
-    }
 }

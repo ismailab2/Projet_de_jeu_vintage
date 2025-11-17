@@ -42,31 +42,12 @@ public class Bomb {
 
         explosion = new Explosion(game, position, power);
 
-        //game.addExplosion(explosion);
+        game.addExplosion(explosion);
 
         // Remet la case centrale de la bombe comme explosion
         //game.getGrid().getCell(position).setCellType(CellType.EXPLOSION);
-
+        game.removeBombe(this);
         timer.cancel();
-
-        //game.removeBombe(this);
     }
 
-    public void update() {
-        if (explosion != null) {
-            explosion.update();
-        }
-    }
-
-    public boolean hasExploded() {
-        return exploded;
-    }
-
-    public boolean isExplosionFinished() {
-        return explosion != null && explosion.isFinished();
-    }
-
-    public Point getPosition() {
-        return position;
-    }
 }

@@ -23,11 +23,4 @@ public class Cell {
         this.cellType = cellType;
     }
 
-    public CellType getOriginalType() {
-        return originalType;
-    }
-
-    public Point getPosition() {
-        return position;
-    }
 }

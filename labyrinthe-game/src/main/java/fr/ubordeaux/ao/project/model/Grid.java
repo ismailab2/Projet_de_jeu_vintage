@@ -18,7 +18,6 @@ public class Grid {
     public int getxSize() {
         return xSize;
     }
-
     public int getySize() {
         return ySize;
     }
@@ -38,10 +37,6 @@ public class Grid {
     public boolean validPosition(Point point){
         return (point.getX()>=0 && point.getY()>=0
                 && point.getX()<this.getxSize() && point.getY()<this.getySize());
-    }
-
-    public boolean isInside(int x, int y){
-        return x >= 0 && y >= 0 && x < xSize && y < ySize;
     }
 
 }

@@ -1,6 +1,8 @@
 package fr.ubordeaux.ao.project.model;
 
 import fr.ubordeaux.ao.project.model.entity.Bomb;
+import fr.ubordeaux.ao.project.model.entity.Enemy;
+import fr.ubordeaux.ao.project.model.entity.Explosion;
 import fr.ubordeaux.ao.project.model.entity.Player;
 import fr.ubordeaux.ao.project.model.enums.CellType;
 import fr.ubordeaux.ao.project.model.enums.Direction;
@@ -15,15 +17,19 @@ import java.util.List;
 
 //un objet de cette classe represente la logique de la partie en cours, avec son joueur et son labytinth pour le moment
 public class Game {
-    private Grid labyrinth;
-    private Player player;
+    private final Grid labyrinth;
+    private final Player player;
 
-    private Collision collisionManager;
-    private Movement movementManager;
+    private  Enemy enemy;
+
+    private final Collision  collisionManager;
+    private final Movement movementManager;
     private Rules rulesManager;
 
-    private List<Bomb> bombs;
-    private PlaceBombRandom bombPlacer;
+    private final List<Bomb> bombs;
+    private final PlaceBombRandom bombPlacer;
+
+    private  List<Explosion> explosions;
 
     //constructeur utilsé pour lancer la game par default
     //possibilité de changer sa taille en modifiant defaultXsize et defaultYsize
@@ -42,18 +48,6 @@ public class Game {
                     cell[i][j] = new Cell(CellType.WALL,new Point(i,j));
                 }
 
-                /*
-                //mettre quelques caisse a des position arbitraire
-                else if ((i==3 && j==3) || (i==4 && j==2)) {
-                    cell[i][j] = new Cell(CellType.BOX,new Point(i,j));
-                }
-
-                else {
-                    cell[i][j] = new Cell(CellType.GROUND,new Point(i,j));
-                }
-
-                 */
-
             }
             // Caisses fixes non destructibles par les bombes
             for (int k = 2; k < defaultXsize; k += 2) {
@@ -66,11 +60,13 @@ public class Game {
         this.labyrinth = new Grid(cell, defaultXsize, defaultYsize);
         this.player = new Player(new Point(1,1));
 
+        this.enemy = new Enemy(new Point(2,2));
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
         this.rulesManager = new Rules(this,false);
 
         this.bombs = new ArrayList<>();
+        this.explosions = new ArrayList<>();
         this.bombPlacer = new PlaceBombRandom(this, bombs);
 
     }
@@ -125,12 +121,23 @@ public class Game {
         bombPlacer.placeBombRandom(power);
     }
 
-
     public Player getPlayer() {
         return player;
     }
 
+    public Enemy getEnemy(){
+        return enemy;
+    }
+
     public Grid getGrid(){
         return this.labyrinth;
+    }
+
+    public void addExplosion(Explosion explosion) {
+        explosions.add(explosion);
+    }
+
+    public void removeBombe(Bomb bomb) {
+        bombs.remove(bomb);
     }
 }
