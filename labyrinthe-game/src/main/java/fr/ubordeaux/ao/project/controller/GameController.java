@@ -1,7 +1,7 @@
 package fr.ubordeaux.ao.project.controller;
 
 import fr.ubordeaux.ao.project.controller.pattern.commands.BagOfCommand;
-import fr.ubordeaux.ao.project.controller.pattern.commands.MovementCommand;
+import fr.ubordeaux.ao.project.controller.pattern.commands.MovementPlayerCommand;
 import fr.ubordeaux.ao.project.controller.pattern.commands.PlaceBombCommand;
 import fr.ubordeaux.ao.project.model.Game;
 import fr.ubordeaux.ao.project.model.enums.Direction;
@@ -27,16 +27,16 @@ public class GameController implements KeyListener {
         switch (e.getKeyCode()) {
 
             case KeyEvent.VK_UP ->
-                    bag.addCommand(new MovementCommand(game, Direction.NORTH));
+                    bag.addCommand(new MovementPlayerCommand(game, Direction.NORTH));
 
             case KeyEvent.VK_DOWN ->
-                    bag.addCommand(new MovementCommand(game, Direction.SOUTH));
+                    bag.addCommand(new MovementPlayerCommand(game, Direction.SOUTH));
 
             case KeyEvent.VK_LEFT ->
-                    bag.addCommand(new MovementCommand(game, Direction.WEST));
+                    bag.addCommand(new MovementPlayerCommand(game, Direction.WEST));
 
             case KeyEvent.VK_RIGHT ->
-                    bag.addCommand(new MovementCommand(game, Direction.EAST));
+                    bag.addCommand(new MovementPlayerCommand(game, Direction.EAST));
 
             case KeyEvent.VK_SPACE ->
                     bag.addCommand(new PlaceBombCommand(game, GameConstants.POWER));

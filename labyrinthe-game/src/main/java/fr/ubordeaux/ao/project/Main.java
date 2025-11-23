@@ -1,7 +1,7 @@
 package fr.ubordeaux.ao.project;
 
 import fr.ubordeaux.ao.project.controller.pattern.commands.BagOfCommand;
-import fr.ubordeaux.ao.project.controller.pattern.commands.MovementCommand;
+import fr.ubordeaux.ao.project.controller.pattern.commands.MovementPlayerCommand;
 import fr.ubordeaux.ao.project.controller.pattern.commands.PlaceBombCommand;
 import fr.ubordeaux.ao.project.model.Game;
 import fr.ubordeaux.ao.project.model.enums.Direction;
@@ -39,21 +39,21 @@ public class Main {
         BagOfCommand bag = new BagOfCommand();
 
 
-        bag.addCommand(new MovementCommand(game, Direction.NORTH));
+        bag.addCommand(new MovementPlayerCommand(game, Direction.NORTH));
         bag.executeAll();
         game.printGame();
 
-        bag.addCommand(new MovementCommand(game, Direction.SOUTH));
-        bag.executeAll();
-        game.printGame();
-
-
-        bag.addCommand(new MovementCommand(game, Direction.EAST));
+        bag.addCommand(new MovementPlayerCommand(game, Direction.SOUTH));
         bag.executeAll();
         game.printGame();
 
 
-        bag.addCommand(new MovementCommand(game, Direction.WEST));
+        bag.addCommand(new MovementPlayerCommand(game, Direction.EAST));
+        bag.executeAll();
+        game.printGame();
+
+
+        bag.addCommand(new MovementPlayerCommand(game, Direction.WEST));
         bag.executeAll();
         game.printGame();
 

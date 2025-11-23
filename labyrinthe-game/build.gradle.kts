@@ -34,6 +34,7 @@ tasks.named<Test>("test") {
 
 application {
     mainClass = "fr.ubordeaux.ao.project.Main"
+    //mainClass = "fr.ubordeaux.ao.project.Test.TestGame"
 }
 
 idea {

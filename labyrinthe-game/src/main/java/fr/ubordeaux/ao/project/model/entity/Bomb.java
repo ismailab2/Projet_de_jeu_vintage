@@ -4,6 +4,8 @@ import fr.ubordeaux.ao.project.model.Game;
 import fr.ubordeaux.ao.project.model.enums.CellType;
 import fr.ubordeaux.ao.project.model.util.Point;
 
+
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -24,6 +26,13 @@ public class Bomb {
     }
 
     public void place() {
+
+        // Utiliser le RulesManager déjà existant dans Game
+        if (!game.getRulesManager().canPlaceBomb(game.getPlayer())) {
+            System.out.println("Impossible de poser la bombe ici !");
+            return;
+        }
+
         game.getGrid().getCell(position).setCellType(CellType.BOMB);
 
         timer = new Timer();
@@ -35,7 +44,7 @@ public class Bomb {
         }, 3000);
     }
 
-    private void explode() {
+    public void explode() {
         if (exploded) return;
 
         exploded = true;
@@ -44,10 +53,19 @@ public class Bomb {
 
         game.addExplosion(explosion);
 
-        // Remet la case centrale de la bombe comme explosion
-        //game.getGrid().getCell(position).setCellType(CellType.EXPLOSION);
+        // Mise à jour du gameplay via Rules
+        game.getRulesManager().updateGameplay();
+
         game.removeBombe(this);
         timer.cancel();
+    }
+
+    public boolean isExploded() {
+        return exploded;
+    }
+
+    public Explosion getExplosion() {
+        return explosion;
     }
 
 }

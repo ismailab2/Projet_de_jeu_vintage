@@ -17,4 +17,10 @@ public class Movement {
 
         this.game.getPlayer().setPlayerPosition(newPosition);
     }
+
+    public void enemyMovement(Direction direction){
+        Point newPosition = Point.sum(Point.directionToPoint(direction), game.getPlayer().getPlayerPosition());
+
+        this.game.getPlayer().setPlayerPosition(newPosition);
+    }
 }

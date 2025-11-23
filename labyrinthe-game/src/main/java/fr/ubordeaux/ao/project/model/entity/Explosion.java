@@ -13,76 +13,78 @@ public class Explosion {
     private final Point position;
     private final int power;
     private final Game game;
-    private boolean finished;
 
     public Explosion(Game game, Point position, int power) {
         this.game = game;
         this.position = position;
         this.power = power;
-        this.finished = false;
         propagate();
     }
 
     private void propagate() {
-        // Case centrale
         game.getGrid().getCell(position).setCellType(CellType.EXPLOSION);
 
-        for (Direction dirEnum : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
-            Point dir = Point.directionToPoint(dirEnum);
+        Player player = game.getPlayer();
+        Enemy enemy = game.getEnemy();
 
+        CellType cell = game.getGrid().getCell(position).getCellType();
+
+        if (cell == CellType.EXPLOSION) {
+
+            if (player.getPlayerPosition().equals(position)) {
+                player.setAlive(false);
+            }
+
+            if (enemy.getPositionEnemy().equals(position)) {
+                enemy.setAlive(false);
+            }
+        }
+
+
+        // Propagation dans les 4 directions
+        for (Direction dir : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
+            Point dirVec = Point.directionToPoint(dir);
             for (int i = 1; i <= power; i++) {
-                Point next = new Point(position.getX() + dir.getX() * i,
-                        position.getY() + dir.getY() * i);
-
-                if (game.getPlayer().getPlayerPosition().equals(next)) {
-                    //tuer le joueur
-                }
+                Point next = new Point(position.getX() + dirVec.getX() * i,
+                        position.getY() + dirVec.getY() * i);
 
                 if (!game.getGrid().validPosition(next)) break;
 
-                Cell cell = game.getGrid().getCell(next);
-                CellType type = cell.getCellType();
+                Cell cellNext = game.getGrid().getCell(next);
+                CellType type = cellNext.getCellType();
 
                 if (type == CellType.WALL || type == CellType.BOX_FIXE) break;
 
-                if (type == CellType.BOX || type == CellType.GROUND) {
-                    cell.setCellType(CellType.EXPLOSION);
+                if (type == CellType.BOX) {
+                    cellNext.setCellType(CellType.EXPLOSION);
+                    game.getPlayer().setScore(game.getPlayer().getScore() + 10);
                     break;
                 }
-            }
-        }
-    }
 
-    public void update() {
-        if (!finished) {
-            clearExplosion();
-            finished = true;
-        }
-    }
+                if (type == CellType.GROUND) {
+                    cellNext.setCellType(CellType.EXPLOSION);
 
-    private void clearExplosion() {
-        game.getGrid().getCell(position).setCellType(CellType.GROUND);
+                    // atteint par le projection du bombe
+                    if (player.getPlayerPosition().equals(next)) {
+                        player.setAlive(false);
+                    }
 
-        for (Direction dirEnum : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
-            Point dir = Point.directionToPoint(dirEnum);
+                    if (enemy.getPositionEnemy().equals(next)) {
+                        enemy.setAlive(false);
+                    }
 
-            for (int i = 1; i <= power; i++) {
-                Point next = new Point(position.getX() + dir.getX() * i,
-                        position.getY() + dir.getY() * i);
-
-                if (!game.getGrid().validPosition(next)) break;
-
-                Cell cell = game.getGrid().getCell(next);
-                CellType type = cell.getCellType();
-
-                if (type == CellType.EXPLOSION){
-                    cell.setCellType(CellType.GROUND);
                 }
             }
         }
     }
 
-    public boolean isFinished() {
-        return finished;
+
+
+    public Point getPosition() {
+        return position;
+    }
+
+    public int getPower() {
+        return power;
     }
 }
