@@ -7,12 +7,15 @@ import fr.ubordeaux.ao.project.model.util.Point;
 import fr.ubordeaux.ao.project.model.enums.Direction;
 
 import java.util.EnumSet;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Explosion {
 
     private final Point position;
     private final int power;
     private final Game game;
+    private Timer timer;
 
     public Explosion(Game game, Point position, int power) {
         this.game = game;
@@ -29,15 +32,14 @@ public class Explosion {
 
         CellType cell = game.getGrid().getCell(position).getCellType();
 
-        if (cell == CellType.EXPLOSION) {
+        if (player.getPlayerPosition().equals(position)) {
+            player.setAlive(false);
+            this.game.getRulesManager().endGame();
+        }
 
-            if (player.getPlayerPosition().equals(position)) {
-                player.setAlive(false);
-            }
-
-            if (enemy.getPositionEnemy().equals(position)) {
-                enemy.setAlive(false);
-            }
+        if (enemy.getPositionEnemy().equals(position)) {
+            enemy.setAlive(false);
+            this.game.getRulesManager().endGame();
         }
 
 
@@ -57,7 +59,7 @@ public class Explosion {
 
                 if (type == CellType.BOX) {
                     cellNext.setCellType(CellType.EXPLOSION);
-                    game.getPlayer().setScore(game.getPlayer().getScore() + 10);
+                    game.getRulesManager().addPlayerPoint(10);
                     break;
                 }
 
@@ -76,15 +78,34 @@ public class Explosion {
                 }
             }
         }
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                endExplosion();
+            }
+        }, 3000);
     }
 
+    private void endExplosion(){
+        // Propagation dans les 4 directions
+        for (Direction dir : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
+            Point dirVec = Point.directionToPoint(dir);
+            for (int i = 1; i <= power; i++) {
+                Point next = new Point(position.getX() + dirVec.getX() * i,
+                        position.getY() + dirVec.getY() * i);
 
+                if (!game.getGrid().validPosition(next)) break;
 
-    public Point getPosition() {
-        return position;
-    }
+                Cell cellNext = game.getGrid().getCell(next);
+                CellType type = cellNext.getCellType();
 
-    public int getPower() {
-        return power;
+                if (type == CellType.EXPLOSION) {
+                    cellNext.setCellType(CellType.GROUND);
+                }
+            }
+        }
+        game.removeExplosion(this);
+        timer.cancel();
     }
 }

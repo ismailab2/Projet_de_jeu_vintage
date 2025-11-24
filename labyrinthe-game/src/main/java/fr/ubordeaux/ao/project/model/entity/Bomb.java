@@ -15,7 +15,6 @@ public class Bomb {
     private final int power;
     private final Game game;
     private boolean exploded;
-    private Explosion explosion;
     private Timer timer;
 
     public Bomb(Game game, Point position, int power) {
@@ -23,11 +22,12 @@ public class Bomb {
         this.position = position;
         this.power = power;
         this.exploded = false;
+
+        this.place();
     }
 
     public void place() {
-
-        if (!game.getRulesManager().canPlaceBomb(game.getPlayer())) {
+        if (!game.getCollision().canPlaceBomb(game.getPlayer().getPlayerPosition())) {
             System.out.println("Impossible de poser la bombe ici !");
             return;
         }
@@ -48,11 +48,9 @@ public class Bomb {
 
         exploded = true;
 
-        explosion = new Explosion(game, position, power);
+        Explosion explosion = new Explosion(game, position, power);
 
         game.addExplosion(explosion);
-
-        game.getRulesManager().updateGameplay();
 
         game.removeBombe(this);
         timer.cancel();
@@ -60,10 +58,6 @@ public class Bomb {
 
     public boolean isExploded() {
         return exploded;
-    }
-
-    public Explosion getExplosion() {
-        return explosion;
     }
 
 }

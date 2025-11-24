@@ -28,11 +28,6 @@ public class Game {
     private final PlaceBombRandom bombPlacer;
     private final List<Explosion> explosions;
 
-    private boolean gameOver;
-    private boolean multiplayerMode;
-    private boolean playerWon;
-    private boolean playerLost;
-
     public Game() {
         int defaultXsize = 8;
         int defaultYsize = 8;
@@ -68,11 +63,6 @@ public class Game {
         this.bombs = new ArrayList<>();
         this.explosions = new ArrayList<>();
         this.bombPlacer = new PlaceBombRandom(this, bombs);
-
-        this.gameOver = false;
-        this.multiplayerMode = false;
-        this.playerWon = false;
-        this.playerLost = false;
     }
 
     public Game(Grid labyrinth, Player player) {
@@ -86,11 +76,6 @@ public class Game {
         this.bombs = new ArrayList<>();
         this.explosions = new ArrayList<>();
         this.bombPlacer = new PlaceBombRandom(this, bombs);
-
-        this.gameOver = false;
-        this.multiplayerMode = false;
-        this.playerWon = false;
-        this.playerLost = false;
     }
 
     // Debug print
@@ -118,7 +103,6 @@ public class Game {
     public void movePlayer(Direction direction) {
         if (collisionManager.explosionCollision(direction)) {
             player.setAlive(false);
-            playerLost = true;
         }
         if (collisionManager.playerCollision(direction)) {
             movementManager.playerMovement(direction);
@@ -139,9 +123,8 @@ public class Game {
         }
     }
 
-
     public void placeBomb(int power) {
-        bombPlacer.placeBombRandom(power);
+        bombs.add(new Bomb(this, player.getPlayerPosition(),1));
     }
 
     public Player getPlayer() {
@@ -168,35 +151,15 @@ public class Game {
         bombs.remove(bomb);
     }
 
-    public void setGameOver(boolean b) {
-        this.gameOver = b;
-        if (b) {
-            System.out.println("La partie est terminee !");
-            if (playerWon) {
-                System.out.println("Le joueur a gagne !");
-            } else if (playerLost) {
-                System.out.println("Le joueur a perdu !");
-            }
-        }
-    }
-
-    public void setPlayerWon(boolean b) {
-        this.playerWon = b;
-    }
-
-    public void setPlayerLost(boolean b) {
-        this.playerLost = b;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public boolean isMultiPlayerMode() {
-        return multiplayerMode;
+    public void removeExplosion(Explosion explosion) {
+        explosions.remove(explosion);
     }
 
     public Rules getRulesManager() {
         return rulesManager;
+    }
+
+    public Collision getCollision(){
+        return this.collisionManager;
     }
 }
