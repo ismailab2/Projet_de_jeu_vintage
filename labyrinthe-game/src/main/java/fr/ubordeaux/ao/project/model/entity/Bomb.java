@@ -27,7 +27,6 @@ public class Bomb {
 
     public void place() {
 
-        // Utiliser le RulesManager déjà existant dans Game
         if (!game.getRulesManager().canPlaceBomb(game.getPlayer())) {
             System.out.println("Impossible de poser la bombe ici !");
             return;
@@ -53,7 +52,6 @@ public class Bomb {
 
         game.addExplosion(explosion);
 
-        // Mise à jour du gameplay via Rules
         game.getRulesManager().updateGameplay();
 
         game.removeBombe(this);

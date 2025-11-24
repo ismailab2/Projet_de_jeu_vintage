@@ -2,7 +2,6 @@ package fr.ubordeaux.ao.project.model.entity;
 
 import fr.ubordeaux.ao.project.model.util.Point;
 
-import java.util.stream.DoubleStream;
 
 public class Enemy {
 

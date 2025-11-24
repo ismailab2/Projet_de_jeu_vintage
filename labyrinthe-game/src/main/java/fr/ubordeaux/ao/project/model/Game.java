@@ -33,7 +33,6 @@ public class Game {
     private boolean playerWon;
     private boolean playerLost;
 
-    // Constructeur par défaut
     public Game() {
         int defaultXsize = 8;
         int defaultYsize = 8;
@@ -76,7 +75,6 @@ public class Game {
         this.playerLost = false;
     }
 
-    // Constructeur personnalisé
     public Game(Grid labyrinth, Player player) {
         this.labyrinth = labyrinth;
         this.player = player;

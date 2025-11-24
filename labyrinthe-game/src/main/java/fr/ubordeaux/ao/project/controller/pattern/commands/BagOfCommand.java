@@ -23,8 +23,4 @@ public class BagOfCommand {
         }
     }
 
-    public void clear() {
-        queue.clear();
-        System.out.println("Youpi Sac de commandes est vidé.");
-    }
 }

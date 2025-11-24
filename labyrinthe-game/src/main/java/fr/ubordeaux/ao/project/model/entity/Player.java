@@ -13,7 +13,6 @@ public class Player {
         this.score = 0;
     }
 
-    // Accesseurs et mutateurs
     public Point getPlayerPosition() {
         return position;
     }
