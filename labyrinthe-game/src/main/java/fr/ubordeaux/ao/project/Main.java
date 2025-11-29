@@ -13,7 +13,7 @@ public class Main {
 
         GameController controller = new GameController(game, view);
 
-        view.createWindow();
-        view.addController(controller.getKeyListener());
+        //view.createWindow();
+        //view.addController(controller.getKeyListener());
     }
 }

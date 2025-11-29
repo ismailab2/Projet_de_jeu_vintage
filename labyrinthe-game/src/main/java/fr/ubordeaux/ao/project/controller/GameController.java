@@ -52,6 +52,6 @@ public class GameController {
             enemyBag.executeAll();
         }).start();
 
-        new Timer(50, e -> view.repaint()).start();
+        //new Timer(50, e -> view.repaint()).start();
     }
 }
