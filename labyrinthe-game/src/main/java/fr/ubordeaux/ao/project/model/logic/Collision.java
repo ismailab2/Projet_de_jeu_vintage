@@ -28,7 +28,7 @@ public class Collision {
     }
 
     public boolean enemyCollision(Direction direction) {
-        Point newPosition = Point.sum(Point.directionToPoint(direction), game.getPlayer().getPlayerPosition());
+        Point newPosition = Point.sum(Point.directionToPoint(direction), game.getEnemy().getPositionEnemy());
 
         //System.out.print(newPosition.getX());
         //System.out.println(newPosition.getY());
@@ -39,6 +39,16 @@ public class Collision {
     //test la collision entre la position du joueur et une direction
     public boolean explosionCollision(Direction direction) {
         Point newPosition = Point.sum(Point.directionToPoint(direction), game.getPlayer().getPlayerPosition());
+
+        //System.out.print(newPosition.getX());
+        //System.out.println(newPosition.getY());
+
+        return game.getGrid().getCell(newPosition).getCellType() == CellType.EXPLOSION;
+    }
+
+    //test la collision entre la position du joueur et une direction
+    public boolean explosionCollisionE(Direction direction) {
+        Point newPosition = Point.sum(Point.directionToPoint(direction), game.getEnemy().getPositionEnemy());
 
         //System.out.print(newPosition.getX());
         //System.out.println(newPosition.getY());

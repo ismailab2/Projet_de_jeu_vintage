@@ -23,11 +23,17 @@ public class GameController {
         this.game = game;
         this.view = view;
 
-        this.playerBag = new BagOfCommand();
-        this.enemyBag = new BagOfCommand();
+        this.playerBag =  BagOfCommand.getInstance();
+        this.enemyBag = BagOfCommand.getInstance();
+
+        JFrame frame = view.getFrame();
+        frame.addKeyListener(getKeyListener());
+        frame.setFocusable(true);
+        frame.requestFocusInWindow();
 
         startTimers();
     }
+
 
     public KeyAdapter getKeyListener() {
         return new KeyAdapter() {
@@ -47,7 +53,7 @@ public class GameController {
 
     private void startTimers() {
 
-        new Timer(500, e -> {
+        new Timer(1500, e -> {
             enemyBag.addCommand(new MovementEnemyCommand(game));
             enemyBag.executeAll();
         }).start();

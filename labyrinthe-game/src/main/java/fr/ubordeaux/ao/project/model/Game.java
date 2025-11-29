@@ -113,7 +113,7 @@ public class Game {
 
         Direction randomDir = Direction.getRandomDirection();
 
-        if (collisionManager.explosionCollision(randomDir)) {
+        if (collisionManager.explosionCollisionE(randomDir)) {
             enemy.setAlive(false);
             return;
         }
@@ -129,10 +129,6 @@ public class Game {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public List<Bomb> getBombs() {
-        return bombs;
     }
 
     public Enemy getEnemy() {

@@ -56,8 +56,4 @@ public class Bomb {
         timer.cancel();
     }
 
-    public boolean isExploded() {
-        return exploded;
-    }
-
 }
