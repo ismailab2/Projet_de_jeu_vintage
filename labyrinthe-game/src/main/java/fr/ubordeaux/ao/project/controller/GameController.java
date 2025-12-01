@@ -47,6 +47,7 @@ public class GameController {
                     case KeyEvent.VK_SPACE -> playerBag.addCommand(new PlaceBombCommand(game, 1));
                 }
                 playerBag.executeAll();
+                view.render();
             }
         };
     }
@@ -56,6 +57,7 @@ public class GameController {
         new Timer(1500, e -> {
             enemyBag.addCommand(new MovementEnemyCommand(game));
             enemyBag.executeAll();
+            view.render();
         }).start();
 
         //new Timer(50, e -> view.repaint()).start();
