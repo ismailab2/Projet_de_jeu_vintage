@@ -27,11 +27,11 @@ public class BagOfCommand {
 
     public void addCommand(Command command) {
         queue.add(command);
-        System.out.println("Commande ajoutée : " + command.getClass().getSimpleName());
+        //System.out.println("Commande ajoutée : " + command.getClass().getSimpleName());
     }
 
     public void executeAll() {
-        System.out.println("Exécution de toutes les commandes...");
+        //System.out.println("Exécution de toutes les commandes...");
         while (!queue.isEmpty()) {
             Command command = queue.poll();
             command.execute();

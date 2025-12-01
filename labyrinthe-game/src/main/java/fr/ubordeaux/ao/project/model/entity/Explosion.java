@@ -65,14 +65,18 @@ public class Explosion {
 
                 if (type == CellType.GROUND) {
                     cellNext.setCellType(CellType.EXPLOSION);
+                    System.out.println(player.getPlayerPosition());
+                    System.out.println(next);
 
                     // atteint par le projection du bombe
                     if (player.getPlayerPosition().equals(next)) {
                         player.setAlive(false);
+                        this.game.getRulesManager().endGame();
                     }
 
                     if (enemy.getPositionEnemy().equals(next)) {
                         enemy.setAlive(false);
+                        this.game.getRulesManager().endGame();
                     }
 
                 }
@@ -88,6 +92,7 @@ public class Explosion {
     }
 
     private void endExplosion(){
+        game.getGrid().getCell(this.position).setCellType(CellType.GROUND);
         // Propagation dans les 4 directions
         for (Direction dir : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
             Point dirVec = Point.directionToPoint(dir);

@@ -60,7 +60,7 @@ public class GameFrame {
         imgGround    = loadImage("/user/ground.jpg");
         imgWall      = loadImage("/user/wall.jpg");
         imgBox       = loadImage("/user/box.png");
-        imgBoxFixe   = loadImage("/user/box_fixe.png");
+        imgBoxFixe   = loadImage("/user/box.png");
 
         imgBomb      = null; // loadImage("/user/bomb.png");
         imgExplosion = null; // loadImage("/user/explosion.png");

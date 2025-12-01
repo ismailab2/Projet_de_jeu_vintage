@@ -19,6 +19,10 @@ public class Cell {
         return cellType;
     }
 
+    public Point getPosition(){
+        return this.position;
+    }
+
     public void setCellType(CellType cellType) {
         this.cellType = cellType;
     }

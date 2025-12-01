@@ -29,8 +29,8 @@ public class Game {
     private final List<Explosion> explosions;
 
     public Game() {
-        int defaultXsize = 8;
-        int defaultYsize = 8;
+        int defaultXsize = 9;
+        int defaultYsize = 9;
 
         Cell[][] cell = new Cell[defaultXsize][defaultYsize];
 
@@ -48,13 +48,20 @@ public class Game {
         // Caisses fixes non destructibles
         for (int k = 2; k < defaultXsize; k += 2) {
             for (int m = 2; m < defaultYsize; m += 2) {
-                cell[k][m] = new Cell(CellType.BOX_FIXE, new Point(k, m));
+                cell[k][m] = new Cell(CellType.WALL, new Point(k, m));
+            }
+        }
+
+        // Caisses fixes  destructibles
+        for (int k = 3; k < defaultXsize-2; k += 2) {
+            for (int m = 1; m < defaultYsize; m += 2) {
+                cell[k][m] = new Cell(CellType.BOX, new Point(k, m));
             }
         }
 
         this.labyrinth = new Grid(cell, defaultXsize, defaultYsize);
         this.player = new Player(new Point(1, 1));
-        this.enemy = new Enemy(new Point(2, 2));
+        this.enemy = new Enemy(new Point(7, 7));
 
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
@@ -101,6 +108,9 @@ public class Game {
 
     // Mouvement du joueur
     public void movePlayer(Direction direction) {
+        if(!player.isAlive()){
+            return;
+        }
         if (collisionManager.explosionCollision(direction)) {
             player.setAlive(false);
         }
