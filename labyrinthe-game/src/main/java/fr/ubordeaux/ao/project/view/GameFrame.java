@@ -61,7 +61,7 @@ public class GameFrame implements Observer {
         imgGround    = loadImage("/user/ground.jpg");
         imgWall      = loadImage("/user/wall.jpg");
         imgBox       = loadImage("/user/box.png");
-        imgBoxFixe   = loadImage("/user/box.png");
+        imgBoxFixe   = loadImage("/user/box_fixe.png");
 
         imgBomb      = null; // loadImage("/user/bomb.png");
         imgExplosion = null; // loadImage("/user/explosion.png");
