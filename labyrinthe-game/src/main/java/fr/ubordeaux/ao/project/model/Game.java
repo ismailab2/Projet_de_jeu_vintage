@@ -10,12 +10,15 @@ import fr.ubordeaux.ao.project.model.logic.Collision;
 import fr.ubordeaux.ao.project.model.logic.Movement;
 import fr.ubordeaux.ao.project.model.logic.PlaceBombRandom;
 import fr.ubordeaux.ao.project.model.logic.Rules;
+import fr.ubordeaux.ao.project.model.pattern.observable.Observable;
+import fr.ubordeaux.ao.project.model.pattern.observable.Observer;
 import fr.ubordeaux.ao.project.model.util.Point;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class Game {
+public class Game implements Observable{
     private final Grid labyrinth;
     private final Player player;
     private Enemy enemy;
@@ -27,6 +30,9 @@ public class Game {
     private final List<Bomb> bombs;
     private final PlaceBombRandom bombPlacer;
     private final List<Explosion> explosions;
+
+    //observer
+    public LinkedList<Observer> observers = new LinkedList<Observer>();
 
     public Game() {
         int defaultXsize = 9;
@@ -70,6 +76,8 @@ public class Game {
         this.bombs = new ArrayList<>();
         this.explosions = new ArrayList<>();
         this.bombPlacer = new PlaceBombRandom(this, bombs);
+
+        this.notifyExplosion();
     }
 
     public Game(Grid labyrinth, Player player) {
@@ -130,6 +138,7 @@ public class Game {
         if (collisionManager.playerCollision(direction)) {
             movementManager.playerMovement(direction);
         }
+        this.notifyPlayer();
     }
 
     public void moveEnemy() {
@@ -147,10 +156,14 @@ public class Game {
         if (collisionManager.enemyCollision(randomDir)) {
             movementManager.enemyMovement(randomDir);
         }
+        this.notifyEnemy();
     }
 
     public void placeBomb(int power) {
-        bombs.add(new Bomb(this, player.getPlayerPosition(),1));
+        if(this.player.placeBomb()){
+            bombs.add(new Bomb(this, player.getPlayerPosition(),1));
+            this.notifyBomb();
+        }
     }
 
     public Player getPlayer() {
@@ -183,5 +196,38 @@ public class Game {
 
     public Collision getCollision(){
         return this.collisionManager;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        this.observers.add(observer);
+    }
+
+    @Override
+    public void notifyPlayer() {
+        for (Observer observer : this.observers) {
+            observer.updatePlayer();
+        }
+    }
+
+    @Override
+    public void notifyEnemy() {
+        for (Observer observer : this.observers) {
+            observer.updateEnemy();
+        }
+    }
+
+    @Override
+    public void notifyBomb() {
+        for (Observer observer : this.observers) {
+            observer.updateBomb();
+        }
+    }
+
+    @Override
+    public void notifyExplosion() {
+        for (Observer observer : this.observers) {
+            observer.updateExplosion();
+        }
     }
 }

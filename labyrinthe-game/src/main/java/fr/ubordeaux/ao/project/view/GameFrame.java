@@ -6,6 +6,7 @@ import fr.ubordeaux.ao.project.model.Grid;
 import fr.ubordeaux.ao.project.model.entity.Enemy;
 import fr.ubordeaux.ao.project.model.entity.Player;
 import fr.ubordeaux.ao.project.model.enums.CellType;
+import fr.ubordeaux.ao.project.model.pattern.observable.Observer;
 import fr.ubordeaux.ao.project.model.util.Point;
 
 import javax.imageio.ImageIO;
@@ -17,7 +18,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class GameFrame {
+public class GameFrame implements Observer {
 
     private final Game game;
     private final JFrame frame;
@@ -89,6 +90,32 @@ public class GameFrame {
 
     public JFrame getFrame() {
         return frame;
+    }
+
+    //should divide the render function in pair with observer
+    //only render the updated player
+    @Override
+    public void updatePlayer() {
+        this.render();
+    }
+
+    //only render the updated enemy
+    @Override
+    public void updateEnemy() {
+        this.render();
+    }
+
+    //only render the updated bomb
+    @Override
+    public void updateBomb() {
+        this.render();
+    }
+
+
+    //only render the updated explosion
+    @Override
+    public void updateExplosion() {
+        this.render();
     }
 
     private class GamePanel extends JPanel {

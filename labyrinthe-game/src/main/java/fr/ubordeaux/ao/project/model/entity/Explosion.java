@@ -42,7 +42,6 @@ public class Explosion {
 
         }
 
-
         // Propagation dans les 4 directions
         for (Direction dir : EnumSet.of(Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST)) {
             Point dirVec = Point.directionToPoint(dir);
@@ -78,13 +77,15 @@ public class Explosion {
                 }
             }
         }
+        this.game.notifyExplosion();
+
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 endExplosion();
             }
-        }, 3000);
+        }, 1000);
     }
 
     private void endExplosion(){
@@ -108,5 +109,9 @@ public class Explosion {
         }
         game.removeExplosion(this);
         timer.cancel();
+
+        this.game.getPlayer().getBackBomb();
+
+        game.notifyExplosion();
     }
 }

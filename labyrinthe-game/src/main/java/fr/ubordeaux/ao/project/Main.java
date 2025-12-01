@@ -11,6 +11,8 @@ public class Main {
         Game game = new Game();
         GameFrame view = new GameFrame(game);
 
+        game.addObserver(view);
+
         GameController controller = new GameController(game, view);
 
         //view.createWindow();
