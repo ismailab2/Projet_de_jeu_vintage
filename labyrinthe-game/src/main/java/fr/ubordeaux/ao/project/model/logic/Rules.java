@@ -49,4 +49,8 @@ public class Rules{
     public void addPlayerPoint(int point){
         this.playerScore = this.playerScore + point;
     }
+
+    public int getPlayerPoint(){
+        return this.playerScore;
+    }
 }

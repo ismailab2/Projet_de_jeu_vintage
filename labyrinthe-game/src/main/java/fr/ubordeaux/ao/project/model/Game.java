@@ -106,13 +106,26 @@ public class Game {
         }
     }
 
+    //kill the player
+    public void killPlayer(){
+        player.setAlive(false);
+        rulesManager.endGame();
+    }
+
+    //kill the ennemy
+    public void killEnnemy(){
+        enemy.setAlive(false);
+        rulesManager.endGame();
+    }
+
     // Mouvement du joueur
     public void movePlayer(Direction direction) {
         if(!player.isAlive()){
             return;
         }
         if (collisionManager.explosionCollision(direction)) {
-            player.setAlive(false);
+            killPlayer();
+            return;
         }
         if (collisionManager.playerCollision(direction)) {
             movementManager.playerMovement(direction);
@@ -120,11 +133,14 @@ public class Game {
     }
 
     public void moveEnemy() {
+        if(!player.isAlive()){
+            return;
+        }
 
         Direction randomDir = Direction.getRandomDirection();
 
         if (collisionManager.explosionCollisionE(randomDir)) {
-            enemy.setAlive(false);
+            killEnnemy();
             return;
         }
 

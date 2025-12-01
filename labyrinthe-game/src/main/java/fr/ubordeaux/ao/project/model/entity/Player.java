@@ -24,8 +24,6 @@ public class Player {
     }
 
     public void setAlive(boolean alive) {
-        System.out.println("MORT");
-
         this.alive = alive;
     }
 }

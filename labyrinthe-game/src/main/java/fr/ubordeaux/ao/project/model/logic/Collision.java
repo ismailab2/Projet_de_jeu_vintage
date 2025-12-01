@@ -46,6 +46,11 @@ public class Collision {
         return game.getGrid().getCell(newPosition).getCellType() == CellType.EXPLOSION;
     }
 
+    //test la collision entre la position du joueur et une autre position
+    public boolean equalPlayerPosition(Point position) {
+        return position == game.getPlayer().getPlayerPosition();
+    }
+
     //test la collision entre la position du joueur et une direction
     public boolean explosionCollisionE(Direction direction) {
         Point newPosition = Point.sum(Point.directionToPoint(direction), game.getEnemy().getPositionEnemy());

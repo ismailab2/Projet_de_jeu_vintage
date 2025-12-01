@@ -33,13 +33,13 @@ public class Explosion {
         CellType cell = game.getGrid().getCell(position).getCellType();
 
         if (player.getPlayerPosition().equals(position)) {
-            player.setAlive(false);
-            this.game.getRulesManager().endGame();
+            game.killPlayer();
+
         }
 
         if (enemy.getPositionEnemy().equals(position)) {
-            enemy.setAlive(false);
-            this.game.getRulesManager().endGame();
+            game.killEnnemy();
+
         }
 
 
@@ -65,20 +65,16 @@ public class Explosion {
 
                 if (type == CellType.GROUND) {
                     cellNext.setCellType(CellType.EXPLOSION);
-                    System.out.println(player.getPlayerPosition());
-                    System.out.println(next);
 
-                    // atteint par le projection du bombe
+                    // joueur atteint par le projection du bombe
                     if (player.getPlayerPosition().equals(next)) {
-                        player.setAlive(false);
-                        this.game.getRulesManager().endGame();
+                        game.killPlayer();
                     }
 
+                    // ennemie atteint par le projection du bombe
                     if (enemy.getPositionEnemy().equals(next)) {
-                        enemy.setAlive(false);
-                        this.game.getRulesManager().endGame();
+                        game.killEnnemy();
                     }
-
                 }
             }
         }
