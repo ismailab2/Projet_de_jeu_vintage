@@ -13,9 +13,7 @@ public class Main {
 
         game.addObserver(view);
 
+        //la var ne sera pas utilisé mais initialise des timer, donc utile
         GameController controller = new GameController(game, view);
-
-        //view.createWindow();
-        //view.addController(controller.getKeyListener());
     }
 }

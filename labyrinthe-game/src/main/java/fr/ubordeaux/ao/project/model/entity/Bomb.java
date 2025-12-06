@@ -4,11 +4,10 @@ import fr.ubordeaux.ao.project.model.Game;
 import fr.ubordeaux.ao.project.model.enums.CellType;
 import fr.ubordeaux.ao.project.model.util.Point;
 
-
-
 import java.util.Timer;
 import java.util.TimerTask;
 
+//class qui modelise une bombe, soit juste un timer le temps qu'elle explose et deviennent une Explosion
 public class Bomb {
 
     private final Point position;
@@ -43,6 +42,7 @@ public class Bomb {
         }, 3000);
     }
 
+    //cette bombe est arrivé a la fin de son timer, devient une Explosion et disparait de la game
     public void explode() {
         if (exploded) return;
 

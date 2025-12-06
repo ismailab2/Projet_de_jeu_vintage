@@ -28,7 +28,6 @@ public class Game implements Observable{
     private Rules rulesManager;
 
     private final List<Bomb> bombs;
-    private final PlaceBombRandom bombPlacer;
     private final List<Explosion> explosions;
 
     //observer
@@ -71,11 +70,10 @@ public class Game implements Observable{
 
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
-        this.rulesManager = new Rules(this, false);
+        this.rulesManager = new Rules(this);
 
         this.bombs = new ArrayList<>();
         this.explosions = new ArrayList<>();
-        this.bombPlacer = new PlaceBombRandom(this, bombs);
 
         this.notifyExplosion();
     }
@@ -86,11 +84,10 @@ public class Game implements Observable{
 
         this.collisionManager = new Collision(this);
         this.movementManager = new Movement(this);
-        this.rulesManager = new Rules(this, false);
+        this.rulesManager = new Rules(this);
 
         this.bombs = new ArrayList<>();
         this.explosions = new ArrayList<>();
-        this.bombPlacer = new PlaceBombRandom(this, bombs);
     }
 
     // Debug print
@@ -228,6 +225,13 @@ public class Game implements Observable{
     public void notifyExplosion() {
         for (Observer observer : this.observers) {
             observer.updateExplosion();
+        }
+    }
+
+    @Override
+    public void notifyGameOver() {
+        for (Observer observer : this.observers) {
+            observer.updateGameOver();
         }
     }
 }

@@ -10,6 +10,7 @@ import java.util.EnumSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
+//cette class modelise une explosion de la game (qui était auparavant une bomb)
 public class Explosion {
 
     private final Point position;
@@ -24,6 +25,7 @@ public class Explosion {
         propagate();
     }
 
+    //l'explosion de propage sur le labyrinth, puis lance un timer pour sa disparation
     private void propagate() {
         game.getGrid().getCell(position).setCellType(CellType.EXPLOSION);
 
@@ -88,6 +90,7 @@ public class Explosion {
         }, 1000);
     }
 
+    //l'explosion est fini, on met a jour les case concerné par sa propagation puis l'enleve de la game
     private void endExplosion(){
         game.getGrid().getCell(this.position).setCellType(CellType.GROUND);
         // Propagation dans les 4 directions

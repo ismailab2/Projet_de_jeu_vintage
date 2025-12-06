@@ -8,4 +8,5 @@ public interface Observable {
     void notifyEnemy();
     void notifyBomb();
     void notifyExplosion();
+    void notifyGameOver();
 }

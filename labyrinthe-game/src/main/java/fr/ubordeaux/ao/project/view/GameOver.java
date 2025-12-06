@@ -20,6 +20,6 @@ public class GameOver extends JFrame {
 
         add(label);
         add(label1);
-        setVisible(true);
+        setVisible(false);
     }
 }

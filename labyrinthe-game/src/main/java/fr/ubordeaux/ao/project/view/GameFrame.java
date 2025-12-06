@@ -29,12 +29,13 @@ public class GameFrame implements Observer {
     private BufferedImage imgGround;
     private BufferedImage imgWall;
     private BufferedImage imgBox;
-    private BufferedImage imgBoxFixe;
     private BufferedImage imgBomb;
     private BufferedImage imgExplosion;
 
     private BufferedImage imgPlayer;
     private BufferedImage imgEnemy;
+
+    private GameOver gameOver;
 
     public GameFrame(Game game) {
         this.game = game;
@@ -55,13 +56,14 @@ public class GameFrame implements Observer {
         this.frame.pack();
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
+
+        gameOver = new GameOver(game.getRulesManager());
     }
 
     private void loadImages() {
         imgGround    = loadImage("/user/ground.jpg");
         imgWall      = loadImage("/user/wall.jpg");
         imgBox       = loadImage("/user/box.png");
-        imgBoxFixe   = loadImage("/user/box_fixe.png");
 
         imgBomb      = null; // loadImage("/user/bomb.png");
         imgExplosion = null; // loadImage("/user/explosion.png");
@@ -116,6 +118,14 @@ public class GameFrame implements Observer {
     @Override
     public void updateExplosion() {
         this.render();
+    }
+
+    //game is finished
+    @Override
+    public void updateGameOver() {
+        frame.dispose();
+        gameOver.setVisible(true);
+        gameOver.repaint();
     }
 
     private class GamePanel extends JPanel {
@@ -188,7 +198,7 @@ public class GameFrame implements Observer {
                 case GROUND    -> imgGround;
                 case WALL      -> imgWall;
                 case BOX       -> imgBox;
-                case BOX_FIXE  -> (imgBoxFixe != null ? imgBoxFixe : imgBox);
+                case BOX_FIXE  -> null;
                 case BOMB      -> imgBomb;
                 case EXPLOSION -> imgExplosion;
             };
@@ -199,7 +209,7 @@ public class GameFrame implements Observer {
                 case GROUND    -> new Color(230, 220, 170);
                 case WALL      -> new Color(160, 120, 70);
                 case BOX       -> new Color(200, 160, 90);
-                case BOX_FIXE  -> new Color(100, 80, 60);
+                case BOX_FIXE  -> null;
                 case BOMB      -> Color.RED;
                 case EXPLOSION -> Color.ORANGE;
             };

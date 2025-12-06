@@ -5,7 +5,5 @@ public interface Observer {
     void updateEnemy();
     void updateBomb();
     void updateExplosion();
-
-
-
+    void updateGameOver();
 }

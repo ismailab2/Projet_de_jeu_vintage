@@ -1,53 +1,44 @@
 package fr.ubordeaux.ao.project.model.logic;
 
 import fr.ubordeaux.ao.project.model.Game;
-import fr.ubordeaux.ao.project.model.Cell;
-import fr.ubordeaux.ao.project.model.entity.Bomb;
 import fr.ubordeaux.ao.project.model.entity.Enemy;
-import fr.ubordeaux.ao.project.model.entity.Explosion;
 import fr.ubordeaux.ao.project.model.entity.Player;
-import fr.ubordeaux.ao.project.model.enums.CellType;
-import fr.ubordeaux.ao.project.model.enums.Direction;
-import fr.ubordeaux.ao.project.model.util.Point;
 
-import java.util.EnumSet;
-import java.util.List;
-import java.util.Iterator;
-
-
+//class qui gere qui a gagné et le score du joueur au fil de la partie
 public class Rules{
-
     private final Game game;
-    public boolean isWin;
-    private final boolean multiPlayerMode ;
+    public boolean isWin; //le joueur a t il gagné ?
 
-    private int playerScore;
+    private int playerScore; //score du joueur qui sera augmenté en cassant des caisses
 
-    public Rules (Game game, Boolean isMultiPlayerMode){
+    public Rules (Game game){
         this.game = game;
-        this.isWin = false;
-        this.multiPlayerMode = isMultiPlayerMode;
-    }
+        this.isWin = false;}
 
 
-    // Vérifie l’état du jeu pour victoire/défaite
+    // Fonction de fin de partie, qui vérifie l’état du jeu pour victoire/défaite et appel l'ecran de game over
+    //Affiche a gagné car non implementé dans la vue
     public void endGame() {
         Player player = game.getPlayer();
         Enemy enemy = game.getEnemy();
 
         if (!player.isAlive()) {
+            isWin = false;
             System.out.println("Le joueur a perdu !");
-            return;
         }
 
         if (enemy != null && !enemy.isAlive()) {
             isWin = true;
             System.out.println("Le joueur a gagné !");
         }
+        game.notifyGameOver();
     }
 
+    //ajoute des point au joueur
+    //affiche son score, car non implémenté dans vue
     public void addPlayerPoint(int point){
         this.playerScore = this.playerScore + point;
+        System.out.println(this.playerScore);
     }
 
     public int getPlayerPoint(){
