@@ -12,12 +12,14 @@ public class Movement {
         this.game = game;
     }
 
+    //fait avancer le joueur vers une direction dans le laby
     public void playerMovement(Direction direction){
         Point newPosition = Point.sum(Point.directionToPoint(direction), game.getPlayer().getPlayerPosition());
 
         this.game.getPlayer().setPlayerPosition(newPosition);
     }
 
+    //fait avancer l'ennemi vers une direction dans le laby
     public void enemyMovement(Direction direction){
         Point newPosition = Point.sum(Point.directionToPoint(direction), game.getEnemy().getPositionEnemy());
 

@@ -1,10 +1,8 @@
 package fr.ubordeaux.ao.project.model.util;
-
 import fr.ubordeaux.ao.project.model.enums.Direction;
+import static fr.ubordeaux.ao.project.model.util.Math.abs;
 
 import java.util.Objects;
-
-import static java.lang.Math.abs;
 
 //classe utilitaire d'un point de base, avec des fonctions de distances
 public class Point {
@@ -50,6 +48,7 @@ public class Point {
         return "(" + x + "," + y + ")";
     }
 
+    //tres important pour les comparasion de position
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Point point)) return false;

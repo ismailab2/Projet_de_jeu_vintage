@@ -6,8 +6,8 @@ import fr.ubordeaux.ao.project.model.util.Point;
 public class Grid {
     private Cell[][] labyrinth;
 
-    private int xSize;
-    private int ySize;
+    private int xSize; //sa taille en largeur
+    private int ySize; //sa taille en hauteur
 
     public Grid(Cell[][] labyrinth, int xSize, int ySize){
         this.labyrinth = labyrinth;
@@ -33,7 +33,6 @@ public class Grid {
     }
 
     //renvoi vrai si le point donnée est contenu dans la grid, sinon faux
-    //cette methode sera peut etre bougé ailleur
     public boolean validPosition(Point point){
         return (point.getX()>=0 && point.getY()>=0
                 && point.getX()<this.getxSize() && point.getY()<this.getySize());

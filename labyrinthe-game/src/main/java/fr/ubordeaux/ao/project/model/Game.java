@@ -8,7 +8,6 @@ import fr.ubordeaux.ao.project.model.enums.CellType;
 import fr.ubordeaux.ao.project.model.enums.Direction;
 import fr.ubordeaux.ao.project.model.logic.Collision;
 import fr.ubordeaux.ao.project.model.logic.Movement;
-import fr.ubordeaux.ao.project.model.logic.PlaceBombRandom;
 import fr.ubordeaux.ao.project.model.logic.Rules;
 import fr.ubordeaux.ao.project.model.pattern.observable.Observable;
 import fr.ubordeaux.ao.project.model.pattern.observable.Observer;
@@ -23,16 +22,19 @@ public class Game implements Observable{
     private final Player player;
     private Enemy enemy;
 
+    //logique de notre jeu (interaction entre ses elements)
     private final Collision collisionManager;
     private final Movement movementManager;
     private Rules rulesManager;
 
+    //tableaux representant les Bomb/Explosion actuellements presentes dans la game
     private final List<Bomb> bombs;
     private final List<Explosion> explosions;
 
     //observer
     public LinkedList<Observer> observers = new LinkedList<Observer>();
 
+    //Constructeur qui creer une game par default
     public Game() {
         int defaultXsize = 9;
         int defaultYsize = 9;
@@ -78,6 +80,7 @@ public class Game implements Observable{
         this.notifyExplosion();
     }
 
+    //constructeur non utilisé, qui premet de creer une game pour un player/laby donné
     public Game(Grid labyrinth, Player player) {
         this.labyrinth = labyrinth;
         this.player = player;
@@ -90,7 +93,7 @@ public class Game implements Observable{
         this.explosions = new ArrayList<>();
     }
 
-    // Debug print
+    //fonction de debug qui print la game (plus a jour)
     public void printGame() {
         for (int j = 0; j < labyrinth.getySize(); j++) {
             for (int i = 0; i < labyrinth.getxSize(); i++) {
@@ -123,21 +126,22 @@ public class Game implements Observable{
         rulesManager.endGame();
     }
 
-    // Mouvement du joueur
+    //Deplace le joueur vers une direction si possible
     public void movePlayer(Direction direction) {
         if(!player.isAlive()){
             return;
         }
-        if (collisionManager.explosionCollision(direction)) {
+        if (collisionManager.playerExplosionCollision(direction)) {
             killPlayer();
             return;
         }
-        if (collisionManager.playerCollision(direction)) {
+        if (collisionManager.playerWalkDirection(direction)) {
             movementManager.playerMovement(direction);
         }
         this.notifyPlayer();
     }
 
+    //Deplace l'ennemi vers une direction si possible
     public void moveEnemy() {
         if(!player.isAlive()){
             return;
@@ -145,17 +149,18 @@ public class Game implements Observable{
 
         Direction randomDir = Direction.getRandomDirection();
 
-        if (collisionManager.explosionCollisionE(randomDir)) {
+        if (collisionManager.ennemyExplosionCollision(randomDir)) {
             killEnnemy();
             return;
         }
 
-        if (collisionManager.enemyCollision(randomDir)) {
+        if (collisionManager.enemyWalkDirection(randomDir)) {
             movementManager.enemyMovement(randomDir);
         }
         this.notifyEnemy();
     }
 
+    //apellé par le controller, pose une bomb a la pos du joueur si possible
     public void placeBomb(int power) {
         if(this.player.placeBomb()){
             bombs.add(new Bomb(this, player.getPlayerPosition(),1));
@@ -163,6 +168,7 @@ public class Game implements Observable{
         }
     }
 
+    //getteurs et setteurs
     public Player getPlayer() {
         return player;
     }
@@ -195,6 +201,8 @@ public class Game implements Observable{
         return this.collisionManager;
     }
 
+
+    //implementation de observer
     @Override
     public void addObserver(Observer observer) {
         this.observers.add(observer);
